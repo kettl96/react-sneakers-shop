@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 33px 63px 33px 45px;
+  border-bottom: 1px solid #dadada;
+}
+.logo__container {
+  display: flex;
+  align-items: center;
+}
+.logo__container img {
+  margin: 0 10px 0 0px;
+}
+.logo__info h3, p {
+  margin: 0;
+}
+.logo__info h3 {
+  text-transform: uppercase;
+}
+.header__settings_container {
+  display: flex;
+  align-items: center;
+}
+.cart__container span {
+  margin: 0px 0 0px 10px;
+}
+.header__settings_container li {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  cursor: pointer;
+  margin-left: 15px;
+}
