@@ -8,12 +8,9 @@
 }
 .card__wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  flex: 0 1 25%;
 }
 .card {
-  /* margin: 0 10px; */
+  margin: 0 10px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -73,13 +70,13 @@
   width: 32px;
   height: 32px;
   position: absolute;
-  background-image: url('./assets/heart.png');
+  background-image: url('../../assets/heart.png');
   left: 15%;
   top: 5%;
   transition: 0.3s;
 }
 .add__favorite:hover {
-  background-image: url('./assets/heart-add.png');
+  background-image: url('../../assets/heart-add.png');
 }
 
 .content__header {
