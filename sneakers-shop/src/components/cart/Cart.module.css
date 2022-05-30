@@ -1,5 +1,5 @@
 .cart__sidebar_wrapper {
-  display: none;
+  /* display: none; */
   position: absolute;
   left: 0;
   top: 0;
@@ -9,6 +9,7 @@
   z-index: 1;
 }
 .cart__sidebar {
+  z-index: 5;
   position: absolute;
   width: 430px;
   height: 100%;
