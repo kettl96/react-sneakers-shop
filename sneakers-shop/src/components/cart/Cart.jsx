@@ -1,10 +1,13 @@
+import { React } from 'react';
 import cart from './Cart.module.css'
 import removeBtn from '../../assets/removeBtn.svg'
 import nextArrow from '../../assets/nextArrow.svg'
-import { React } from 'react';
+import prevArrow from '../../assets/prev-arrow.svg'
+import emptyCart from '../../assets/empty-cart.png'
 
-
-function Cart({ onClose, items = [] }) {
+function Cart({ onClose, items = [], onRemove }) {
+  let body = document.querySelector('body')
+  body.style.overflowY = 'hidden';
 
   return (
     <div className={cart.cart__sidebar_wrapper}>
@@ -12,8 +15,21 @@ function Cart({ onClose, items = [] }) {
         <h2>
           Cart
           <img className={cart.cart__removeBtn} src={removeBtn} alt="remove"
-            onClick={onClose} />
+            onClick={() => onClose
+              (body.style.overflowY = 'scroll')} />
         </h2>
+        {items.length === 0 &&
+          <div className={cart.empty__container}>
+            <img src={emptyCart} alt="empty" />
+            <h2>Cart is Empty</h2>
+            <p>Add some stuff, buddy!</p>
+            <button onClick={onClose}>
+              Back to shopping
+              <img src={prevArrow} className={cart.return__arrow} alt="return" />
+            </button>
+          </div>
+        }
+
         {items.length > 0 &&
           <div className={cart.content__wrapper}>
             <div>
@@ -24,7 +40,7 @@ function Cart({ onClose, items = [] }) {
                     <p>{obj.name}</p>
                     <b>{obj.price} $</b>
                   </div>
-                  <img className={cart.cart__removeBtn} src={removeBtn} alt="remove" />
+                  <img onClick={() => onRemove(obj.id)} className={cart.cart__removeBtn} src={removeBtn} alt="remove" />
                 </div>
               ))}
             </div>

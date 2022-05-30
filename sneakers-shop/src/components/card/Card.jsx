@@ -4,13 +4,13 @@ import plus from '../../assets/plus.svg'
 
 import added from '../../assets/added.svg'
 
-function Card({ onFavorite, id, img, name, price, onPlus }) {
+function Card({ onFavorite, _id, img, name, price, onPlus }) {
 
   const [isAdded, setIsAdded] = React.useState(false)
 
   const onClickPlus = () => {
     let isAdd = !isAdded
-    onPlus({ img, name, price, isAdd, id })
+    onPlus({ img, name, price, isAdd, _id })
     setIsAdded(!isAdded)
   }
 
