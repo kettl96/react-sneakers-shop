@@ -1,22 +1,32 @@
 import React from 'react'
 import c from './Card.module.css'
+
 import plus from '../../assets/plus.svg'
-
 import added from '../../assets/added.svg'
+import notFav from '../../assets/heart.png'
+import fav from '../../assets/heart-add.png'
 
-function Card({ onFavorite, _id, img, name, price, onPlus }) {
+
+function Card({ onFavorite, _id, id, img, name, price, onPlus, favorited = false }) {
 
   const [isAdded, setIsAdded] = React.useState(false)
+  const [isFavorite, setIsFavorite] = React.useState(favorited)
 
   const onClickPlus = () => {
     let isAdd = !isAdded
-    onPlus({ img, name, price, isAdd, _id })
+    onPlus({ img, name, price, isAdd, _id, id })
     setIsAdded(!isAdded)
+  }
+  const onClickFavorite = () => {
+    onFavorite({ img, name, price, _id, id })
+    setIsFavorite(!isFavorite)
   }
 
   return (
     <div className={c.card}>
-      <div className={c.add__favorite} onClick={onFavorite}></div>
+      <div className={c.add__favorite} onClick={onClickFavorite}>
+        <img src={isFavorite ? fav : notFav} alt="favorite" />
+      </div>
       <img src={img} alt="" className={c.sneaker__img} />
       <p>{name}</p>
       <div className={c.card__info}>

@@ -1,18 +1,18 @@
 /* eslint-disable */
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import c from './Content.module.css'
 
-import Card from './components/card/Card'
 import Header from './components/header/Header'
 import Cart from './components/cart/Cart';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
-import search from './assets/search.svg';
-import cross from './assets/plus.svg'
 
 function App() {
   const [items, setItems] = React.useState([])
   const [cartItems, setCartItems] = React.useState([])
+  const [favorites, setFavorites] = React.useState([])
   const [searchValue, setSearchValue] = React.useState('')
   const [cartOpened, setCartOpened] = React.useState(false)
 
@@ -21,6 +21,8 @@ function App() {
       .then(response => setItems(response.data))
     axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
       .then(response => setCartItems(response.data))
+    axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
+      .then(response => setFavorites(response.data))
   }, [])
 
   const onAddToCart = (obj) => {
@@ -48,7 +50,31 @@ function App() {
     //   console.log(obj);
     //   // onRemoveItem(obj.id)
     // }
+  }
 
+  const onAddToFavorites = (obj) => {
+    console.log(obj.id);
+    if (favorites.find(favObj => favObj._id === obj._id)) {
+      if (obj.id == undefined) {
+        console.log(5555);
+        axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
+          .then(res => {
+            res.data.forEach(el => {
+              if (el._id === obj._id) {
+                axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${el.id}`)
+              }
+            })
+          })
+      } else {
+        axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${obj.id}`)
+      }
+      setFavorites(prev => prev.filter(item => item._id !== obj._id))
+    } else {
+      axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/favorites', obj)
+        .then(res => {
+          setFavorites([...favorites, res.data])
+        })
+    }
   }
 
   const onRemoveItem = (id) => {
@@ -67,34 +93,23 @@ function App() {
         items={cartItems}
         onClose={() => setCartOpened(false)} />}
       <Header onClickCart={() => setCartOpened(true)} />
-      <div className={c.content__container}>
-        <div className={c.content__header}>
-          <h1>{searchValue ? `Search by: "${searchValue}"` : 'All Sneakers'}</h1>
-          <div className={c.search__container}>
-            <img src={search} alt="Search" />
-            <input type="text" placeholder='Search...'
-              onChange={onChangeSearch}
-              value={searchValue} />
-            {searchValue && <img src={cross} alt="del" className={c.cross}
-              onClick={() => setSearchValue('')} />}
-          </div>
-        </div>
-        <div className={c.card__wrapper}>
-          {items
-            .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-            .map(item => {
-              return <Card
-                key={item._id}
-                _id={item._id}
-                name={item.name}
-                price={item.price}
-                img={item.img}
-                onFavorite={() => console.log('fav')}
-                onPlus={(obj) => onAddToCart(obj)} />
-            })}
-        </div>
+      <Routes>
+        <Route path='/' element={<Home
+          items={items}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onChangeSearch={onChangeSearch}
+          onAddToFavorites={onAddToFavorites}
+          onAddToCart={onAddToCart} />} ></Route>
+      </Routes>
+      <Routes>
+        <Route path='/favorites' element={<Favorites
+          items={favorites}
+          onAddToFavorites={onAddToFavorites}
+        />}></Route>
+      </Routes>
 
-      </div>
+
     </div>
   );
 }

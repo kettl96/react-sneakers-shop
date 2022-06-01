@@ -61,12 +61,12 @@
   width: 32px;
   height: 32px;
   position: absolute;
-  background-image: url('../../assets/heart.png');
   left: 15%;
   top: 5%;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
-.add__favorite:hover {
-  background-image: url('../../assets/heart-add.png');
+.add__favorite img:hover {
+  box-shadow: 2px 2px 2px rgb(119, 119, 119, .4);
+  border-radius: 8px;
 }
 
