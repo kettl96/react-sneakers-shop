@@ -34,7 +34,7 @@ function Cart({ onClose, items = [], onRemove }) {
           <div className={cart.content__wrapper}>
             <div>
               {items.map(obj => (
-                <div className={cart.cartItem}>
+                <div key={obj._id} className={cart.cartItem}>
                   <img src={obj.img} alt='sneakers' width={80} height={75} />
                   <div className={cart.cartItem__info}>
                     <p>{obj.name}</p>

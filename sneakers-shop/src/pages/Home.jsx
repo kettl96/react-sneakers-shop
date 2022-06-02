@@ -4,7 +4,7 @@ import cross from '../assets/plus.svg'
 
 import Card from '../components/card/Card'
 
-function Home({items, searchValue, setSearchValue, onChangeSearch, onAddToFavorites, onAddToCart}) {
+function Home({items, cartItems, favorites, searchValue, setSearchValue, onChangeSearch, onAddToFavorites, onAddToCart}) {
   return (
     <div className={c.content__container}>
         <div className={c.content__header}>
@@ -19,6 +19,8 @@ function Home({items, searchValue, setSearchValue, onChangeSearch, onAddToFavori
           </div>
         </div>
         <div className={c.card__wrapper}>
+          {/* {console.log(cartItems)} */}
+          {/* {console.log(items)} */}
           {items
             .filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
             .map(item => {
@@ -29,6 +31,8 @@ function Home({items, searchValue, setSearchValue, onChangeSearch, onAddToFavori
                 name={item.name}
                 price={item.price}
                 img={item.img}
+                added={cartItems.some(obj => obj._id === item._id)}
+                favorited={favorites.some(obj => obj._id === item._id)}
                 onFavorite={(obj) => onAddToFavorites(obj)}
                 onPlus={(obj) => onAddToCart(obj)} />
             })}

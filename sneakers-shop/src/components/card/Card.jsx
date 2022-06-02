@@ -2,14 +2,14 @@ import React from 'react'
 import c from './Card.module.css'
 
 import plus from '../../assets/plus.svg'
-import added from '../../assets/added.svg'
+import addToCart from '../../assets/added.svg'
 import notFav from '../../assets/heart.png'
 import fav from '../../assets/heart-add.png'
 
 
-function Card({ onFavorite, _id, id, img, name, price, onPlus, favorited = false }) {
+function Card({ onFavorite, _id, id, img, name, price, onPlus, favorited = false, added = false }) {
 
-  const [isAdded, setIsAdded] = React.useState(false)
+  const [isAdded, setIsAdded] = React.useState(added)
   const [isFavorite, setIsFavorite] = React.useState(favorited)
 
   const onClickPlus = () => {
@@ -35,7 +35,7 @@ function Card({ onFavorite, _id, id, img, name, price, onPlus, favorited = false
           <b>{price} $</b>
         </div>
         <button onClick={onClickPlus}>
-          <img src={isAdded ? added : plus} alt="" />
+          <img src={isAdded ? addToCart : plus} alt="" />
         </button>
       </div>
     </div>

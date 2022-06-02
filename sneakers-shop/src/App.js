@@ -17,12 +17,23 @@ function App() {
   const [cartOpened, setCartOpened] = React.useState(false)
 
   React.useEffect(() => {
-    axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
-      .then(response => setItems(response.data))
-    axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
-      .then(response => setCartItems(response.data))
-    axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
-      .then(response => setFavorites(response.data))
+    async function fetchData() {
+      const cartResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
+      const favoritesResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
+      const itemsResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
+
+      setCartItems(cartResponse.data)
+      setFavorites(favoritesResponse.data)
+      setItems(itemsResponse.data)
+    }
+    fetchData()
+
+    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
+    //   .then(response => setItems(response.data))
+    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
+    //   .then(response => setCartItems(response.data))
+    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
+    //   .then(response => setFavorites(response.data))
   }, [])
 
   const onAddToCart = (obj) => {
@@ -32,16 +43,15 @@ function App() {
         .then(res => {
           res.data.forEach(el => {
             if (el._id === obj._id) {
-              axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${el.id}`)
+              axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${el.id}`)
             }
           })
         })
       } else {
-        axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${obj.id}`)
+        axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${obj.id}`)
       }
       setCartItems(prev => prev.filter(el => el._id !== obj._id))
     } else {
-
       axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/cart', obj)
         .then((res) => {
           setCartItems([...cartItems, res.data])
@@ -91,6 +101,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home
           items={items}
+          cartItems={cartItems}
+          favorites={favorites}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           onChangeSearch={onChangeSearch}
