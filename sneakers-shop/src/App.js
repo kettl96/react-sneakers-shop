@@ -26,37 +26,32 @@ function App() {
   }, [])
 
   const onAddToCart = (obj) => {
-    axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/cart', obj)
-      .then((res) => {
-        setCartItems([...cartItems, res.data])
-      })
+    if (cartItems.find(cartObj => cartObj._id === obj._id)) {
+      if (obj.id == undefined) {
+        axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
+        .then(res => {
+          res.data.forEach(el => {
+            if (el._id === obj._id) {
+              axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${el.id}`)
+            }
+          })
+        })
+      } else {
+        axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/favorites/${obj.id}`)
+      }
+      setCartItems(prev => prev.filter(el => el._id !== obj._id))
+    } else {
 
-    // if (obj.isAdd) {
-
-    //   axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/cart', obj)
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       setCartItems([...cartItems, res.data])
-    //       // if (!obj.isAdd) {
-    //       //   let filter = cartItems.filter(e => e._id !== obj._id)
-    //       //   setCartItems(filter)
-    //       // } else  setCartItems([...cartItems, res.data]);
-    //     })
-    // } else {
-    //   axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
-    //     .then(res => {
-    //       console.log(res.data);
-    //     })
-    //   console.log(obj);
-    //   // onRemoveItem(obj.id)
-    // }
+      axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/cart', obj)
+        .then((res) => {
+          setCartItems([...cartItems, res.data])
+        })
+    }
   }
 
   const onAddToFavorites = (obj) => {
-    console.log(obj.id);
     if (favorites.find(favObj => favObj._id === obj._id)) {
       if (obj.id == undefined) {
-        console.log(5555);
         axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
           .then(res => {
             res.data.forEach(el => {
@@ -108,7 +103,6 @@ function App() {
           onAddToFavorites={onAddToFavorites}
         />}></Route>
       </Routes>
-
 
     </div>
   );
