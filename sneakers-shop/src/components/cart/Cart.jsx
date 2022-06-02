@@ -10,7 +10,10 @@ function Cart({ onClose, items = [], onRemove }) {
   body.style.overflowY = 'hidden';
 
   return (
-    <div className={cart.cart__sidebar_wrapper}>
+    <div className={cart.cart__sidebar_wrapper}
+      onClick={(el) => {
+        if (el.target.className === 'Cart_cart__sidebar_wrapper__LKbfX') onClose()
+      }}>
       <div className={cart.cart__sidebar}>
         <h2>
           Cart

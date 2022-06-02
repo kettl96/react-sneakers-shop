@@ -15,38 +15,34 @@ function App() {
   const [favorites, setFavorites] = React.useState([])
   const [searchValue, setSearchValue] = React.useState('')
   const [cartOpened, setCartOpened] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     async function fetchData() {
+      setIsLoading(true)
       const cartResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
       const favoritesResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
       const itemsResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
-
+      
       setCartItems(cartResponse.data)
       setFavorites(favoritesResponse.data)
       setItems(itemsResponse.data)
+      setIsLoading(false)
     }
     fetchData()
-
-    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
-    //   .then(response => setItems(response.data))
-    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
-    //   .then(response => setCartItems(response.data))
-    // axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
-    //   .then(response => setFavorites(response.data))
   }, [])
 
   const onAddToCart = (obj) => {
     if (cartItems.find(cartObj => cartObj._id === obj._id)) {
       if (obj.id == undefined) {
         axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
-        .then(res => {
-          res.data.forEach(el => {
-            if (el._id === obj._id) {
-              axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${el.id}`)
-            }
+          .then(res => {
+            res.data.forEach(el => {
+              if (el._id === obj._id) {
+                axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${el.id}`)
+              }
+            })
           })
-        })
       } else {
         axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${obj.id}`)
       }
@@ -100,6 +96,7 @@ function App() {
       <Header onClickCart={() => setCartOpened(true)} />
       <Routes>
         <Route path='/' element={<Home
+          isLoading={isLoading}
           items={items}
           cartItems={cartItems}
           favorites={favorites}
