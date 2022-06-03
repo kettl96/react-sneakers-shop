@@ -1,11 +1,13 @@
+import React from 'react';
 import c from './Content.module.css'
 import search from '../assets/search.svg';
 import cross from '../assets/plus.svg'
 
 import Card from '../components/card/Card'
 
-function Home({ items, cartItems, favorites, searchValue, setSearchValue,
-  onChangeSearch, onAddToFavorites, onAddToCart, isLoading }) {
+function Home({ items, favorites, searchValue, setSearchValue,
+  onChangeSearch, onAddToCart, isLoading }) {
+
   const renderItems = () => {
     return (
       isLoading
@@ -24,10 +26,7 @@ function Home({ items, cartItems, favorites, searchValue, setSearchValue,
             name={item.name === undefined ? null : item.name}
             price={item.price === undefined ? null : item.price}
             img={item.img === undefined ? null : item.img}
-            added={cartItems.some(obj => obj._id === item._id)}
-            favorited={favorites.some(obj => obj._id === item._id)}
-            onFavorite={(obj) => onAddToFavorites(obj)}
-            onPlus={(obj) => onAddToCart(obj)} />
+            favorited={favorites.some(obj => obj._id === item._id)} />
         }
       })
   }

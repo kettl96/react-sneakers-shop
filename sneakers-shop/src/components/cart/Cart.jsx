@@ -21,6 +21,7 @@ function Cart({ onClose, items = [], onRemove }) {
             onClick={() => onClose
               (body.style.overflowY = 'scroll')} />
         </h2>
+        
         {items.length === 0 &&
           <div className={cart.empty__container}>
             <img src={emptyCart} alt="empty" />

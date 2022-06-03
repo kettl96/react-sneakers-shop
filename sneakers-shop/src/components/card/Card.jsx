@@ -6,21 +6,21 @@ import plus from '../../assets/plus.svg'
 import addToCart from '../../assets/added.svg'
 import notFav from '../../assets/heart.png'
 import fav from '../../assets/heart-add.png'
+import { AppContext } from './../../App';
 
 
-function Card({ onFavorite, _id, id, img, name, loading = false,
-  price, onPlus, favorited = false, added = false }) {
+function Card({ _id, id, img, name, loading = false,
+  price, favorited = false }) {
 
-  const [isAdded, setIsAdded] = React.useState(added)
+  const {isItemAdded, onAddToFavorites, onAddToCart} = React.useContext(AppContext)
+
   const [isFavorite, setIsFavorite] = React.useState(favorited)
 
   const onClickPlus = () => {
-    let isAdd = !isAdded
-    onPlus({ img, name, price, isAdd, _id, id })
-    setIsAdded(!isAdded)
+    onAddToCart({ img, name, price, _id, id })
   }
   const onClickFavorite = () => {
-    onFavorite({ img, name, price, _id, id })
+    onAddToFavorites({img, name, price, _id, id})
     setIsFavorite(!isFavorite)
   }
 
@@ -53,14 +53,11 @@ function Card({ onFavorite, _id, id, img, name, loading = false,
               <b>{price} $</b>
             </div>
             <button onClick={onClickPlus}>
-              <img src={isAdded ? addToCart : plus} alt="" />
+              <img src={isItemAdded(_id) ? addToCart : plus} alt="" />
             </button>
           </div>
         </>
       }
-
-
-
     </div>
   )
 }
