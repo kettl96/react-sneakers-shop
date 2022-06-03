@@ -1,13 +1,28 @@
-import { React } from 'react';
+import React from 'react';
+import axios from 'axios';
 import cart from './Cart.module.css'
 import removeBtn from '../../assets/removeBtn.svg'
 import nextArrow from '../../assets/nextArrow.svg'
-import prevArrow from '../../assets/prev-arrow.svg'
 import emptyCart from '../../assets/empty-cart.png'
+import order from '../../assets/order.png'
 
-function Cart({ onClose, items = [], onRemove }) {
+
+import Info from './Info';
+
+function Cart({ onClose, items = [], onRemove, clearCart }) {
   let body = document.querySelector('body')
   body.style.overflowY = 'hidden';
+
+  const [isOrderComplete, setOrderComplete] = React.useState(false)
+
+  const onClickOrder = async (obj) => {
+    axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/orders', {items: obj})
+    setOrderComplete(true)
+    clearCart()
+    for (let key in obj) {
+      await axios.delete(`https://62945f80a7203b3ed067aaae.mockapi.io/cart/${obj[key].id}`)
+    }
+  }
 
   return (
     <div className={cart.cart__sidebar_wrapper}
@@ -21,18 +36,13 @@ function Cart({ onClose, items = [], onRemove }) {
             onClick={() => onClose
               (body.style.overflowY = 'scroll')} />
         </h2>
-        
+
         {items.length === 0 &&
-          <div className={cart.empty__container}>
-            <img src={emptyCart} alt="empty" />
-            <h2>Cart is Empty</h2>
-            <p>Add some stuff, buddy!</p>
-            <button onClick={onClose}>
-              Back to shopping
-              <img src={prevArrow} className={cart.return__arrow} alt="return" />
-            </button>
-          </div>
-        }
+          <Info
+            onClose={onClose}
+            title={isOrderComplete ? 'Order Complete' : 'Cart is Empty'}
+            description={isOrderComplete ? 'Your order will be ready for delivery soon' : 'Add some stuff, buddy!'}
+            img={isOrderComplete ? order : emptyCart} />}
 
         {items.length > 0 &&
           <div className={cart.content__wrapper}>
@@ -59,7 +69,7 @@ function Cart({ onClose, items = [], onRemove }) {
                 <div className={cart.dash}></div>
                 <div><b>22 $</b></div>
               </div>
-              <button>
+              <button onClick={() => onClickOrder(items)}>
                 Go to order
                 <img className={cart.arrow} src={nextArrow} alt="next" />
               </button>

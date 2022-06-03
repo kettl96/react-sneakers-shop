@@ -6,7 +6,7 @@ import cross from '../assets/plus.svg'
 import Card from '../components/card/Card'
 
 function Home({ items, favorites, searchValue, setSearchValue,
-  onChangeSearch, onAddToCart, isLoading }) {
+  onChangeSearch, isLoading }) {
 
   const renderItems = () => {
     return (
@@ -16,17 +16,18 @@ function Home({ items, favorites, searchValue, setSearchValue,
       .map((item, index) => {
         if (item === undefined) {
           return <Card
-            loading={isLoading} />
+            loading={isLoading}
+            key={index} />
         } else {
           return <Card
             loading={isLoading}
-            key={item._id === undefined ? index : item._id}
-            id={item.id === undefined ? null : item.id}
-            _id={item._id === undefined ? null : item._id}
-            name={item.name === undefined ? null : item.name}
-            price={item.price === undefined ? null : item.price}
-            img={item.img === undefined ? null : item.img}
-            favorited={favorites.some(obj => obj._id === item._id)} />
+            key={item._id}
+            id={item.id}
+            _id={item._id}
+            name={item.name}
+            price={item.price}
+            img={item.img}
+            favorites={favorites.some(obj => obj._id === item._id)} />
         }
       })
   }

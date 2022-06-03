@@ -98,7 +98,8 @@ function App() {
         {cartOpened && <Cart
           onRemove={onRemoveItem}
           items={cartItems}
-          onClose={() => setCartOpened(false)} />}
+          onClose={() => setCartOpened(false)}
+          clearCart={() => setCartItems([])} />}
         <Header onClickCart={() => setCartOpened(true)} />
         <Routes>
           <Route path='/' element={

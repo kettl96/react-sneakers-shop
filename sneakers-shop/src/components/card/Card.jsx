@@ -10,18 +10,15 @@ import { AppContext } from './../../App';
 
 
 function Card({ _id, id, img, name, loading = false,
-  price, favorited = false }) {
-
+  price, favorites = false }) {
   const {isItemAdded, onAddToFavorites, onAddToCart} = React.useContext(AppContext)
 
-  const [isFavorite, setIsFavorite] = React.useState(favorited)
 
   const onClickPlus = () => {
     onAddToCart({ img, name, price, _id, id })
   }
   const onClickFavorite = () => {
     onAddToFavorites({img, name, price, _id, id})
-    setIsFavorite(!isFavorite)
   }
 
   return (
@@ -43,7 +40,7 @@ function Card({ _id, id, img, name, loading = false,
         </ContentLoader>
         : <>
           <div className={c.add__favorite} onClick={onClickFavorite}>
-            <img src={isFavorite ? fav : notFav} alt="favorite" />
+            <img src={favorites ? fav : notFav} alt="favorite" />
           </div>
           <img src={img} alt="" className={c.sneaker__img} />
           <p>{name}</p>
