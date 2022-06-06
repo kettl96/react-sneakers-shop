@@ -7,7 +7,7 @@ import emptyCart from '../../assets/empty-cart.png'
 import order from '../../assets/order.png'
 
 
-import Info from './Info';
+import Info from '../info/Info';
 
 function Cart({ onClose, items = [], onRemove, clearCart, opened }) {
   // let body = document.querySelector('body')
@@ -40,6 +40,7 @@ function Cart({ onClose, items = [], onRemove, clearCart, opened }) {
 
         {items.length === 0 &&
           <Info
+            module={'cart'}
             onClose={onClose}
             title={isOrderComplete ? 'Order Complete' : 'Cart is Empty'}
             description={isOrderComplete ? 'Your order will be ready for delivery soon' : 'Add some stuff, buddy!'}

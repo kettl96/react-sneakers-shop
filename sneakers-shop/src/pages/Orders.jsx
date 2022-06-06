@@ -3,6 +3,9 @@ import axios from 'axios';
 import c from './Content.module.css'
 
 import Card from '../components/card/Card'
+import Info from './../components/info/Info';
+
+import orderSmile from '../assets/order-smile.png'
 
 function Orders({ favorites, isLoading }) {
   const [orders, setOrders] = React.useState([])
@@ -24,22 +27,28 @@ function Orders({ favorites, isLoading }) {
           <Card key={i} loading={isLoading} />
         </div>
       })}
-      {orders.map(item => {
-        return <div key={item.id} className={c.order__wrapper}>
-          <h5>Order #{item.id}</h5>
-          <div className={c.order__cards}>{item.items.map(el => {
-            return <Card
-              loading={isLoading}
-              key={el._id}
-              _id={el._id}
-              id={el.id}
-              name={el.name}
-              price={el.price}
-              img={el.img}
-              favorites={favorites.some(obj => obj._id === el._id)} />
-          })}</div>
-        </div>
-      })}
+      {orders.length === 0
+        ? <Info
+          module={'favorite'}
+          img={orderSmile}
+          title={`You don't have any orders :(`}
+          description={`Place at least one order`} />
+        : orders.map(item => {
+          return <div key={item.id} className={c.order__wrapper}>
+            <h5>Order #{item.id}</h5>
+            <div className={c.order__cards}>{item.items.map(el => {
+              return <Card
+                loading={isLoading}
+                key={el._id}
+                _id={el._id}
+                id={el.id}
+                name={el.name}
+                price={el.price}
+                img={el.img}
+                favorites={favorites.some(obj => obj._id === el._id)} />
+            })}</div>
+          </div>
+        })}
 
     </div>
   )
