@@ -4,7 +4,7 @@ import c from './Content.module.css'
 
 import Card from '../components/card/Card'
 
-function Orders({ favorites }) {
+function Orders({ favorites, isLoading }) {
   const [orders, setOrders] = React.useState([])
 
   React.useEffect(() => {
@@ -19,11 +19,17 @@ function Orders({ favorites }) {
       <div className={c.content__header}>
         <h1>My orders</h1>
       </div>
+      {isLoading && [...Array(3)].map((e, i) => {
+        return <div className={c.order__cards}>
+          <Card key={i} loading={isLoading} />
+        </div>
+      })}
       {orders.map(item => {
         return <div key={item.id} className={c.order__wrapper}>
           <h5>Order #{item.id}</h5>
           <div className={c.order__cards}>{item.items.map(el => {
             return <Card
+              loading={isLoading}
               key={el._id}
               _id={el._id}
               id={el.id}

@@ -21,15 +21,19 @@ function App() {
 
   React.useEffect(() => {
     async function fetchData() {
-      setIsLoading(true)
-      const cartResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
-      const favoritesResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
-      const itemsResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
+      try {
+        setIsLoading(true)
+        const cartResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
+        const favoritesResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
+        const itemsResponse = await axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/items')
 
-      setCartItems(cartResponse.data)
-      setFavorites(favoritesResponse.data)
-      setItems(itemsResponse.data)
-      setIsLoading(false)
+        setCartItems(cartResponse.data)
+        setFavorites(favoritesResponse.data)
+        setItems(itemsResponse.data)
+        setIsLoading(false)
+      } catch (error) {
+        alert('Please reload the page')
+      }
     }
     fetchData()
   }, [])
@@ -92,15 +96,18 @@ function App() {
   const isItemAdded = (_id) => {
     return cartItems.some(obj => obj._id === _id)
   }
+  let body = document.querySelector('body')
+  cartOpened ? body.style.overflowY = 'hidden' : body.style.overflowY = 'scroll' 
 
   return (
     <AppContext.Provider value={{ items, cartItems, favorites, isItemAdded, onAddToFavorites, onAddToCart }}>
       <div className="wrapper">
-        {cartOpened && <Cart
+        <Cart
+          opened={cartOpened}
           onRemove={onRemoveItem}
           items={cartItems}
-          onClose={() => setCartOpened(false)}
-          clearCart={() => setCartItems([])} />}
+          onClose={() => {setCartOpened(false)}}
+          clearCart={() => setCartItems([])} />
         <Header onClickCart={() => setCartOpened(true)} />
         <Routes>
           <Route path='/' element={
@@ -121,7 +128,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path='/orders' element={
-            <Orders favorites={favorites} />}>
+            <Orders
+              favorites={favorites}
+              isLoading={isLoading} />}>
           </Route>
         </Routes>
       </div>

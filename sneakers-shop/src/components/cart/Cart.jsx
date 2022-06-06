@@ -9,9 +9,9 @@ import order from '../../assets/order.png'
 
 import Info from './Info';
 
-function Cart({ onClose, items = [], onRemove, clearCart }) {
-  let body = document.querySelector('body')
-  body.style.overflowY = 'hidden';
+function Cart({ onClose, items = [], onRemove, clearCart, opened }) {
+  // let body = document.querySelector('body')
+  // if (opened) body.style.overflowY = 'hidden'
 
   const totalPrice = items.reduce((sum, obj) => obj.price + sum, 0)
 
@@ -27,16 +27,15 @@ function Cart({ onClose, items = [], onRemove, clearCart }) {
   }
 
   return (
-    <div className={cart.cart__sidebar_wrapper}
+    <div className={`${cart.cart__sidebar_wrapper} ${opened ? cart.visible : ''}`}
       onClick={(el) => {
-        if (el.target.className === 'Cart_cart__sidebar_wrapper__LKbfX') onClose()
+        if (el.target.className === 'Cart_cart__sidebar_wrapper__LKbfX Cart_visible__Pouss') onClose()
       }}>
-      <div className={cart.cart__sidebar}>
+      <div className={`${cart.cart__sidebar} ${opened ? cart.cart_visible : ''}`}>
         <h2>
           Cart
           <img className={cart.cart__removeBtn} src={removeBtn} alt="remove"
-            onClick={() => onClose
-              (body.style.overflowY = 'scroll')} />
+            onClick={() => onClose()} />
         </h2>
 
         {items.length === 0 &&
@@ -69,7 +68,7 @@ function Cart({ onClose, items = [], onRemove, clearCart }) {
               <div className={cart.result__total}>
                 <div>Tax 5%:</div>
                 <div className={cart.dash}></div>
-                <div><b>{totalPrice / 100 * 5} $</b></div>
+                <div><b>{Math.ceil(totalPrice * 0.05)} $</b></div>
               </div>
               <button onClick={() => onClickOrder(items)}>
                 Go to order
