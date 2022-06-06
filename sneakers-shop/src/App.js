@@ -8,6 +8,10 @@ import Cart from './components/cart/Cart';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Orders from './pages/Orders';
+import Slider from './components/slider/Slider';
+
+import slide from './components/slider/Slider.module.css'
+
 
 export const AppContext = React.createContext({})
 
@@ -97,7 +101,7 @@ function App() {
     return cartItems.some(obj => obj._id === _id)
   }
   let body = document.querySelector('body')
-  cartOpened ? body.style.overflowY = 'hidden' : body.style.overflowY = 'scroll' 
+  cartOpened ? body.style.overflowY = 'hidden' : body.style.overflowY = 'scroll'
 
   return (
     <AppContext.Provider value={{ items, cartItems, favorites, isItemAdded, onAddToFavorites, onAddToCart }}>
@@ -106,9 +110,20 @@ function App() {
           opened={cartOpened}
           onRemove={onRemoveItem}
           items={cartItems}
-          onClose={() => {setCartOpened(false)}}
+          onClose={() => { setCartOpened(false) }}
           clearCart={() => setCartItems([])} />
         <Header onClickCart={() => setCartOpened(true)} />
+        <Slider>
+          <div className={slide.item + ' ' + slide.item_1}>
+            <img src="/img/slider/1.jpg" alt="sneaker" />
+          </div>
+          <div className={slide.item + ' ' + slide.item_2}>
+            <img src="/img/slider/2.jpg" alt="sneaker" />
+          </div>
+          <div className={slide.item + ' ' + slide.item_3}>
+            <img src="/img/slider/3.jpg" alt="sneaker" />
+          </div>
+        </Slider>
         <Routes>
           <Route path='/' element={
             <Home
