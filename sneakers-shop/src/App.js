@@ -7,6 +7,7 @@ import Header from './components/header/Header'
 import Cart from './components/cart/Cart';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Orders from './pages/Orders';
 
 export const AppContext = React.createContext({})
 
@@ -116,6 +117,11 @@ function App() {
         <Routes>
           <Route path='/favorites' element={
             <Favorites />}>
+          </Route>
+        </Routes>
+        <Routes>
+          <Route path='/orders' element={
+            <Orders favorites={favorites} />}>
           </Route>
         </Routes>
       </div>

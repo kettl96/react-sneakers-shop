@@ -13,10 +13,12 @@ function Cart({ onClose, items = [], onRemove, clearCart }) {
   let body = document.querySelector('body')
   body.style.overflowY = 'hidden';
 
+  const totalPrice = items.reduce((sum, obj) => obj.price + sum, 0)
+
   const [isOrderComplete, setOrderComplete] = React.useState(false)
 
   const onClickOrder = async (obj) => {
-    axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/orders', {items: obj})
+    axios.post('https://62945f80a7203b3ed067aaae.mockapi.io/orders', { items: obj })
     setOrderComplete(true)
     clearCart()
     for (let key in obj) {
@@ -62,12 +64,12 @@ function Cart({ onClose, items = [], onRemove, clearCart }) {
               <div className={cart.result__total}>
                 <div>Total:</div>
                 <div className={cart.dash}></div>
-                <div><b>122 $</b></div>
+                <div><b>{totalPrice} $</b></div>
               </div>
               <div className={cart.result__total}>
                 <div>Tax 5%:</div>
                 <div className={cart.dash}></div>
-                <div><b>22 $</b></div>
+                <div><b>{totalPrice / 100 * 5} $</b></div>
               </div>
               <button onClick={() => onClickOrder(items)}>
                 Go to order
