@@ -115,13 +115,13 @@ function App() {
         <Header onClickCart={() => setCartOpened(true)} />
         <Slider>
           <div className={slide.item + ' ' + slide.item_1}>
-            <img src="/img/slider/1.jpg" alt="sneaker" />
+            <img src="img/slider/1.jpg" alt="sneaker" />
           </div>
           <div className={slide.item + ' ' + slide.item_2}>
-            <img src="/img/slider/2.jpg" alt="sneaker" />
+            <img src="img/slider/2.jpg" alt="sneaker" />
           </div>
           <div className={slide.item + ' ' + slide.item_3}>
-            <img src="/img/slider/3.jpg" alt="sneaker" />
+            <img src="img/slider/3.jpg" alt="sneaker" />
           </div>
         </Slider>
         <Routes>

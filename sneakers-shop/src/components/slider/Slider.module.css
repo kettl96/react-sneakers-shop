@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   margin: 10px;
-  opacity: .6;
+  opacity: .5;
   transition: .3s ease;
 }
 .arrow:hover {
@@ -38,12 +38,12 @@
 
 .arrow_left {
   left: 0;
-  z-index: 5;
+  z-index: 1;
 }
 
 .arrow_right {
   right: 0;
-  z-index: 5;
+  z-index: 1;
 }
 
 .main__container {
