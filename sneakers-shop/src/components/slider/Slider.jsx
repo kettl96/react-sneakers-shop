@@ -19,7 +19,7 @@ function Slider({ children }) {
         })
       })
     )
-  }, [])
+  }, [children])
 
   const rightClick = () => {
     setOffset((cur) => {
