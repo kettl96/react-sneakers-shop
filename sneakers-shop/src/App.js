@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +10,6 @@ import Orders from './pages/Orders';
 import Slider from './components/slider/Slider';
 
 import slide from './components/slider/Slider.module.css'
-
 
 export const AppContext = React.createContext({})
 
