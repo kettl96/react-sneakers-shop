@@ -42,7 +42,7 @@ function App() {
 
   const onAddToCart = (obj) => {
     if (cartItems.find(cartObj => cartObj._id === obj._id)) {
-      if (obj.id == undefined) {
+      if (obj.id === undefined) {
         axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/cart')
           .then(res => {
             res.data.forEach(el => {
@@ -65,7 +65,7 @@ function App() {
 
   const onAddToFavorites = (obj) => {
     if (favorites.find(favObj => favObj._id === obj._id)) {
-      if (obj.id == undefined) {
+      if (obj.id === undefined) {
         axios.get('https://62945f80a7203b3ed067aaae.mockapi.io/favorites')
           .then(res => {
             res.data.forEach(el => {
