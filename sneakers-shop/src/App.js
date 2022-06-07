@@ -10,6 +10,7 @@ import Orders from './pages/Orders';
 import Slider from './components/slider/Slider';
 
 import slide from './components/slider/Slider.module.css'
+import Popup from './components/popup/Popup';
 
 export const AppContext = React.createContext({})
 
@@ -20,6 +21,8 @@ function App() {
   const [searchValue, setSearchValue] = React.useState('')
   const [cartOpened, setCartOpened] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
+  const [popupOpen, setPopupOpen] = React.useState(false)
+  const [popupItem, setPopupItem] = React.useState([])
 
   React.useEffect(() => {
     async function fetchData() {
@@ -98,6 +101,11 @@ function App() {
   const isItemAdded = (_id) => {
     return cartItems.some(obj => obj._id === _id)
   }
+
+  const popUpClick = (obj) => {
+    setPopupItem(obj)
+    setPopupOpen(!popupOpen)
+  }
   let body = document.querySelector('body')
   cartOpened ? body.style.overflowY = 'hidden' : body.style.overflowY = 'scroll'
 
@@ -110,6 +118,12 @@ function App() {
           items={cartItems}
           onClose={() => { setCartOpened(false) }}
           clearCart={() => setCartItems([])} />
+
+        <Popup
+          item={popupItem}
+          popUpClick={popUpClick}
+          visible={popupOpen}
+        />
         <Header onClickCart={() => setCartOpened(true)} />
         <Slider>
           <div className={slide.item + ' ' + slide.item_1}>
@@ -131,7 +145,8 @@ function App() {
               favorites={favorites}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
-              onChangeSearch={onChangeSearch} />} >
+              onChangeSearch={onChangeSearch}
+              popUpClick={(obj) => popUpClick(obj)} />} >
           </Route>
         </Routes>
         <Routes>

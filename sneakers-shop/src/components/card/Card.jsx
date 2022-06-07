@@ -10,19 +10,20 @@ import { AppContext } from './../../App';
 
 
 function Card({ _id, id, img, name, loading = false,
-  price, favorites = false }) {
-  const {isItemAdded, onAddToFavorites, onAddToCart} = React.useContext(AppContext)
+  price, favorites = false, popUpClick }) {
+  const { isItemAdded, onAddToFavorites, onAddToCart } = React.useContext(AppContext)
 
 
   const onClickPlus = () => {
     onAddToCart({ img, name, price, _id, id })
   }
   const onClickFavorite = () => {
-    onAddToFavorites({img, name, price, _id, id})
+    onAddToFavorites({ img, name, price, _id, id })
   }
-
+  
   return (
     <div className={c.card}>
+      
       {loading
         ? <ContentLoader
           speed={1}
@@ -42,7 +43,7 @@ function Card({ _id, id, img, name, loading = false,
           <div className={c.add__favorite} onClick={onClickFavorite}>
             <img src={favorites ? fav : notFav} alt="favorite" />
           </div>
-          <img src={img} alt="" className={c.sneaker__img} />
+          <img onClick={()=>popUpClick({name, img, _id, price, id})} src={img} alt="sneakers" className={c.sneaker__img} />
           <p>{name}</p>
           <div className={c.card__info}>
             <div>

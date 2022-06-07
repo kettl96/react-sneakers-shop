@@ -6,7 +6,7 @@ import cross from '../assets/plus.svg'
 import Card from '../components/card/Card'
 
 function Home({ items, favorites, searchValue, setSearchValue,
-  onChangeSearch, isLoading }) {
+  onChangeSearch, isLoading, popUpClick }) {
 
   const renderItems = () => {
     return (
@@ -27,7 +27,8 @@ function Home({ items, favorites, searchValue, setSearchValue,
             name={item.name}
             price={item.price}
             img={item.img}
-            favorites={favorites.some(obj => obj._id === item._id)} />
+            favorites={favorites.some(obj => obj._id === item._id)}
+            popUpClick={(obj) => popUpClick(obj)} />
         }
       })
   }
@@ -46,6 +47,7 @@ function Home({ items, favorites, searchValue, setSearchValue,
         </div>
       </div>
       <div className={c.card__wrapper}>
+
         {renderItems()}
       </div>
     </div>

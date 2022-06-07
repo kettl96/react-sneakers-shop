@@ -1,5 +1,3 @@
-
-
 .card {
   margin: 0 15px 20px 15px;
   position: relative;
@@ -11,7 +9,7 @@
   border: 1px solid #F3F3F3;
   border-radius: 40px;
   transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-  cursor: pointer;
+  cursor: default;
 }
 .card:hover {
   box-shadow: 0px 14px 35px rgba(0, 0, 0, 0.08);
@@ -20,6 +18,11 @@
 .sneaker__img {
   width: 140px;
   height: 132px;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+.sneaker__img:hover {
+  transform: scale(1.2);
 }
 .card p {
   margin: 16px 0;
@@ -61,6 +64,7 @@
   width: 32px;
   height: 32px;
   position: absolute;
+  z-index: 1;
   left: 15%;
   top: 5%;
   transition: 0.3s ease;
@@ -69,4 +73,3 @@
   box-shadow: 2px 2px 2px rgb(119, 119, 119, .4);
   border-radius: 8px;
 }
-

@@ -1,21 +1,25 @@
-
 .content__container h1 {
   margin: 0;
 }
+
 .content__container {
+  position: relative;
   padding: 40px;
   font-family: 'Inter', sans-serif;
 }
+
 .card__wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
+
 .content__header {
   display: flex;
   justify-content: space-between;
   margin: 0 0 35px 0;
 }
+
 .search__container {
   position: relative;
   border: 1px solid #F3F3F3;
@@ -31,6 +35,7 @@
   padding: 12px 0 0 10px;
   outline: none;
 }
+
 .cross {
   cursor: pointer;
   position: absolute;
@@ -44,6 +49,7 @@
 .order__wrapper h5 {
   font-size: 16px;
 }
+
 .order__cards {
   display: flex;
   flex-wrap: wrap;
