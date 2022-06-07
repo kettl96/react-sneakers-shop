@@ -23,8 +23,9 @@ function Slider({ children }) {
 
   const rightClick = () => {
     setOffset((cur) => {
-      if (cur === -(PAGE_WIDTH * 2)) return 0
-      return Math.max(cur - PAGE_WIDTH, -(PAGE_WIDTH * (pages.length - 1)))
+      if (cur < -(PAGE_WIDTH)) return 0
+      // return Math.max(-cur - PAGE_WIDTH, -(PAGE_WIDTH * (pages.length - 1)))
+      return cur - PAGE_WIDTH
     })
   }
   const leftClick = () => {
@@ -33,6 +34,11 @@ function Slider({ children }) {
       return Math.min(cur + PAGE_WIDTH, 0)
     })
   }
+
+  React.useEffect(() => {
+    let timer = setInterval(() => rightClick(), 7000)
+    return () => { clearInterval(timer) }
+  }, [])
 
   return (
     <div className={s.main__container}>
@@ -46,7 +52,6 @@ function Slider({ children }) {
         </div>
       </div>
       <div className={s.arrow + ' ' + s.arrow_right} onClick={rightClick}>&#8658;</div>
-
     </div>
   )
 }

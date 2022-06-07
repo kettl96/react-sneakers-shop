@@ -29,7 +29,7 @@ function Cart({ onClose, items = [], onRemove, clearCart, opened }) {
   return (
     <div className={`${cart.cart__sidebar_wrapper} ${opened ? cart.visible : ''}`}
       onClick={(el) => {
-        if (el.target.className === 'Cart_cart__sidebar_wrapper__LKbfX Cart_visible__Pouss') onClose()
+        if (el.target.className.includes('Cart_cart__sidebar_wrapper')) onClose()
       }}>
       <div className={`${cart.cart__sidebar} ${opened ? cart.cart_visible : ''}`}>
         <h2>
